@@ -44,11 +44,16 @@ namespace bugTrackerNew.Controllers
         }
 
 
-        [HttpDelete]
-        public void DeleteUser([FromBody] User user)
+        [HttpDelete ("{user_id:Guid}")]
+        public void DeleteUser(Guid User_id)
         {
-            _bugTrackerDBContext.Users.RemoveRange(user);
+
+            var User = _bugTrackerDBContext.Users.Find(User_id);
+            _bugTrackerDBContext.Users.Remove(User);
             _bugTrackerDBContext.SaveChanges();
+
+            
         }
     }
-}
+    }
+
