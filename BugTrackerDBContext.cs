@@ -5,9 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
-
-
-
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace bugTrackerNew
 {
@@ -21,6 +20,7 @@ namespace bugTrackerNew
         public BugTrackerDBContext(DbContextOptions<BugTrackerDBContext> options) 
             :base(options)
         {
+           
 
         }
 
@@ -41,7 +41,11 @@ namespace bugTrackerNew
                 .HasForeignKey(Issue => Issue.Project_id);
 
 
-
+            modelBuilder
+                .Entity<Issue>()
+                .Property(i => i.Post_id)
+                .ValueGeneratedOnAdd();
+                
 
 
             // ---- issue klar
@@ -55,8 +59,13 @@ namespace bugTrackerNew
                 .Entity<User>()
                 .HasMany(user => user.Comments)
                 .WithOne(Comment => Comment.User);
-                
-                
+
+
+            modelBuilder
+               .Entity<User>()
+               .Property(u => u.User_id)
+               .ValueGeneratedOnAdd();
+
 
             // ---- user klar
 
@@ -71,6 +80,11 @@ namespace bugTrackerNew
                .HasMany(project => project.Issues)
                .WithOne(Issue => Issue.Project);
 
+            modelBuilder
+                .Entity<Project>()
+                .Property(p => p.Project_id)
+                .ValueGeneratedOnAdd();
+
 
 
             // ---- project klar
@@ -83,11 +97,17 @@ namespace bugTrackerNew
             modelBuilder
                 .Entity<Comment>()
                 .HasKey(comment => comment.Comment_id);
+               
 
             modelBuilder
                .Entity<Comment>()
                .HasOne(comment => comment.Issue)
                .WithMany(issue => issue.Comments);
+
+            modelBuilder
+               .Entity<Comment>()
+               .Property(p => p.Comment_id)
+               .ValueGeneratedOnAdd();
                
                
 
