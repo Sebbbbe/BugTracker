@@ -28,14 +28,14 @@ namespace BugTrackerNew.Models
       
         //dependent entity nu har jag skapat en länk mellan primary 
         // och foreign key
-        public Guid User_id { get; set; }
+        public Guid? User_id { get; set; }
         // en issue har med all information som finns i user
 
         public User User { get; set; }
 
         // skapar en dependent entity genom project_id
 
-        public Guid Project_id { get; set; }
+        public Guid? Project_id { get; set; }
 
         //Allt i project behövs i issue för att veta i vilket
         //projekt "folder" den ska vara i

@@ -48,25 +48,24 @@ namespace bugTrackerNew.Migrations
                     Date_created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     due_date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Completed_date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    User_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Project_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Project_id1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    User_id = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Project_id = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Issues", x => x.Post_id);
                     table.ForeignKey(
-                        name: "FK_Issues_Projects_Project_id1",
-                        column: x => x.Project_id1,
+                        name: "FK_Issues_Projects_Project_id",
+                        column: x => x.Project_id,
                         principalTable: "Projects",
                         principalColumn: "Project_id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Issues_Users_Project_id",
-                        column: x => x.Project_id,
+                        name: "FK_Issues_Users_User_id",
+                        column: x => x.User_id,
                         principalTable: "Users",
                         principalColumn: "User_id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -75,26 +74,30 @@ namespace bugTrackerNew.Migrations
                 {
                     Comment_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Comment_text = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    User_id1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    User_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Post_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    User_id = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Post_id = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Comments", x => x.Comment_id);
                     table.ForeignKey(
-                        name: "FK_Comments_Issues_User_id",
-                        column: x => x.User_id,
+                        name: "FK_Comments_Issues_Post_id",
+                        column: x => x.Post_id,
                         principalTable: "Issues",
                         principalColumn: "Post_id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Comments_Users_User_id1",
-                        column: x => x.User_id1,
+                        name: "FK_Comments_Users_User_id",
+                        column: x => x.User_id,
                         principalTable: "Users",
                         principalColumn: "User_id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_Post_id",
+                table: "Comments",
+                column: "Post_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_User_id",
@@ -102,19 +105,14 @@ namespace bugTrackerNew.Migrations
                 column: "User_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_User_id1",
-                table: "Comments",
-                column: "User_id1");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Issues_Project_id",
                 table: "Issues",
                 column: "Project_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Issues_Project_id1",
+                name: "IX_Issues_User_id",
                 table: "Issues",
-                column: "Project_id1");
+                column: "User_id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

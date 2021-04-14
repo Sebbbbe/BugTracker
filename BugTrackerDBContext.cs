@@ -37,16 +37,25 @@ namespace bugTrackerNew
                 .Entity<Issue>()
                 .HasOne(issue => issue.User)
                 .WithMany(user => user.Issues)
-                .HasForeignKey(issue => issue.User_id)
-                .HasForeignKey(Issue => Issue.Project_id);
+                .HasForeignKey(issue => issue.User_id);
+              
 
 
             modelBuilder
                 .Entity<Issue>()
                 .Property(i => i.Post_id)
                 .ValueGeneratedOnAdd();
-                
 
+            modelBuilder
+              .Entity<Issue>()
+              .HasOne(i => i.Project)
+              .WithMany(p => p.Issues)
+              .HasForeignKey(i => i.Project_id);
+              
+              
+
+
+            //  .HasForeignKey(Issue => Issue.Project_id);
 
             // ---- issue klar
 
@@ -58,7 +67,14 @@ namespace bugTrackerNew
             modelBuilder
                 .Entity<User>()
                 .HasMany(user => user.Comments)
-                .WithOne(Comment => Comment.User);
+                .WithOne(Comment => Comment.User)
+                .HasForeignKey(comment => comment.User_id);
+
+            modelBuilder
+                .Entity<User>()
+                .HasMany(User => User.Issues)
+                .WithOne(issue => issue.User)
+                .HasForeignKey(Issue => Issue.User_id);
 
 
             modelBuilder
@@ -78,7 +94,8 @@ namespace bugTrackerNew
             modelBuilder
                .Entity<Project>()
                .HasMany(project => project.Issues)
-               .WithOne(Issue => Issue.Project);
+               .WithOne(Issue => Issue.Project)
+               .HasForeignKey(issue => issue.Project_id);
 
             modelBuilder
                 .Entity<Project>()
@@ -97,16 +114,17 @@ namespace bugTrackerNew
             modelBuilder
                 .Entity<Comment>()
                 .HasKey(comment => comment.Comment_id);
-               
+
 
             modelBuilder
                .Entity<Comment>()
                .HasOne(comment => comment.Issue)
-               .WithMany(issue => issue.Comments);
+               .WithMany(issue => issue.Comments)
+               .HasForeignKey(comment => comment.Post_id);
 
             modelBuilder
                .Entity<Comment>()
-               .Property(p => p.Comment_id)
+               .Property(comment => comment.Comment_id)
                .ValueGeneratedOnAdd();
                
                

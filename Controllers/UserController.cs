@@ -1,6 +1,7 @@
 ﻿
 using BugTrackerNew.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,18 +21,16 @@ namespace bugTrackerNew.Controllers
         // vi vill att controller ska vara beroende av DBContext
         // så vi säger att våran ctor måste ha en BugTrackerDBContext 
 
-        public UserController(BugTrackerDBContext bugTrackerDBContext) 
+        public UserController(BugTrackerDBContext bugTrackerDBContext)
         {
             _bugTrackerDBContext = bugTrackerDBContext;
         }
-       
+
         [HttpGet]
         public List<User> GetUser()
-
         {
             var users = _bugTrackerDBContext.Users.ToList();
             return users;
-
 
         }
 
@@ -44,16 +43,32 @@ namespace bugTrackerNew.Controllers
         }
 
 
-        [HttpDelete ("{user_id:Guid}")]
-        public void DeleteUser(Guid User_id)
-        {
+         [HttpDelete("{user_id:Guid}")]
+         public void DeleteUser(Guid User_id)
+         {
+             var User = _bugTrackerDBContext.Users.Find(User_id); 
+             _bugTrackerDBContext.Users.Remove(User);
+             _bugTrackerDBContext.SaveChanges();
+         } 
 
-            var User = _bugTrackerDBContext.Users.Find(User_id);
-            _bugTrackerDBContext.Users.Remove(User);
-            _bugTrackerDBContext.SaveChanges();
+        
 
+         [HttpPut("{user_id:Guid}")]
+         public void UpdateUser ([FromBody] User user,  Guid user_id)
+         {
+            var userUpdate = _bugTrackerDBContext.Users.Find(user_id);
             
-        }
-    }
-    }
+                 userUpdate.First_name = user.First_name;
+                 userUpdate.Second_name = user.Second_name;
+                 _bugTrackerDBContext.SaveChanges();
+         }  
 
+
+
+   
+
+
+
+
+    }
+}

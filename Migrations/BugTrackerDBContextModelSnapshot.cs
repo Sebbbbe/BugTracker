@@ -28,20 +28,17 @@ namespace bugTrackerNew.Migrations
                     b.Property<string>("Comment_text")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("Post_id")
+                    b.Property<Guid?>("Post_id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("User_id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("User_id1")
+                    b.Property<Guid?>("User_id")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Comment_id");
 
-                    b.HasIndex("User_id");
+                    b.HasIndex("Post_id");
 
-                    b.HasIndex("User_id1");
+                    b.HasIndex("User_id");
 
                     b.ToTable("Comments");
                 });
@@ -76,10 +73,7 @@ namespace bugTrackerNew.Migrations
                     b.Property<int>("Priority")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("Project_id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("Project_id1")
+                    b.Property<Guid?>("Project_id")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Status")
@@ -88,7 +82,7 @@ namespace bugTrackerNew.Migrations
                     b.Property<string>("Summary")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("User_id")
+                    b.Property<Guid?>("User_id")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("due_date")
@@ -98,7 +92,7 @@ namespace bugTrackerNew.Migrations
 
                     b.HasIndex("Project_id");
 
-                    b.HasIndex("Project_id1");
+                    b.HasIndex("User_id");
 
                     b.ToTable("Issues");
                 });
@@ -138,13 +132,11 @@ namespace bugTrackerNew.Migrations
                 {
                     b.HasOne("BugTrackerNew.Models.Issue", "Issue")
                         .WithMany("Comments")
-                        .HasForeignKey("User_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Post_id");
 
                     b.HasOne("BugTrackerNew.Models.User", "User")
                         .WithMany("Comments")
-                        .HasForeignKey("User_id1");
+                        .HasForeignKey("User_id");
 
                     b.Navigation("Issue");
 
@@ -153,15 +145,13 @@ namespace bugTrackerNew.Migrations
 
             modelBuilder.Entity("BugTrackerNew.Models.Issue", b =>
                 {
-                    b.HasOne("BugTrackerNew.Models.User", "User")
-                        .WithMany("Issues")
-                        .HasForeignKey("Project_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("BugTrackerNew.Models.Project", "Project")
                         .WithMany("Issues")
-                        .HasForeignKey("Project_id1");
+                        .HasForeignKey("Project_id");
+
+                    b.HasOne("BugTrackerNew.Models.User", "User")
+                        .WithMany("Issues")
+                        .HasForeignKey("User_id");
 
                     b.Navigation("Project");
 

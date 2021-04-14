@@ -19,11 +19,11 @@ namespace  BugTrackerNew.Models
         // sedan för att skapa relationen till comment behöver vi göra dependent
         //entity på comment
         public User User { get; set; }
-        public Guid User_id { get; set; }
+        public Guid? User_id { get; set; }
 
         // nu är user klar dags för issue comment dependent av issue
 
-        public Guid Post_id { get; set; }
+        public Guid? Post_id { get; set; }
         public Issue Issue { get; set; } 
 
 
