@@ -12,7 +12,7 @@ namespace bugTrackerNew.Migrations
                 columns: table => new
                 {
                     Project_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Project_Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Project_Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {

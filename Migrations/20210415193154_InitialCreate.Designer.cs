@@ -10,7 +10,7 @@ using bugTrackerNew;
 namespace bugTrackerNew.Migrations
 {
     [DbContext(typeof(BugTrackerDBContext))]
-    [Migration("20210414124730_InitialCreate")]
+    [Migration("20210415193154_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -106,6 +106,7 @@ namespace bugTrackerNew.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Project_Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Project_id");

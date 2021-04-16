@@ -104,6 +104,7 @@ namespace bugTrackerNew.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Project_Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Project_id");

@@ -102,6 +102,10 @@ namespace bugTrackerNew
                 .Property(p => p.Project_id)
                 .ValueGeneratedOnAdd();
 
+            modelBuilder
+                .Entity<Project>()
+                .Property(project => project.Project_Name)
+                .IsRequired();
 
 
             // ---- project klar
@@ -126,6 +130,8 @@ namespace bugTrackerNew
                .Entity<Comment>()
                .Property(comment => comment.Comment_id)
                .ValueGeneratedOnAdd();
+
+
                
                
 
@@ -147,6 +153,7 @@ namespace bugTrackerNew
 
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Project> Projects { get; set; }
+
 
         public DbSet<Issue> Issues { get; set; }
 
