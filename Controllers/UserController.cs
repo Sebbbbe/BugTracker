@@ -29,8 +29,8 @@ namespace bugTrackerNew.Controllers
         [HttpGet]
         public List<User> GetUser()
         {
-            var users = _bugTrackerDBContext.Users.ToList();
-            return users;
+          var GetUserList =    _bugTrackerDBContext.Users.ToList();
+            return GetUserList;
 
         }
 
@@ -61,11 +61,28 @@ namespace bugTrackerNew.Controllers
                  userUpdate.First_name = user.First_name;
                  userUpdate.Second_name = user.Second_name;
                  _bugTrackerDBContext.SaveChanges();
-         }  
+         }
 
 
+        // en metod för att hämta 
 
-   
+
+        [HttpGet ("{id:Guid}")] // användaren ska göra /user som kommer från route sedan user_id
+        // som jag säger här som ska vara av Guid /user/(guid_id)
+        //det som är innuti http get måste ha samma namn som parametern vi kan kalla den test:guid tex
+        // om vi ville
+        public User GetUser(Guid id)
+        {
+           var GetOneUser = _bugTrackerDBContext.Users.FirstOrDefault(user => user.User_id == id);
+            //hämtar ett  elementet när det som är innuti funktionen stämmer.
+            //så när user_id är lika med det som användaren skriver in i postman user/guid_id
+            //Get funktioner måste returnera något annars ser man inget
+            // det som makes most sense är en User då vi gjorde List<User på första>
+
+            return GetOneUser;
+
+        }
+
 
 
 
