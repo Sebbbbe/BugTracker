@@ -64,11 +64,11 @@ namespace bugTrackerNew.Controllers
         public List<Comment> GetUserAndComments()
         {
 
+            // tar emot ett user id sedan kollar programet vilken user har skrivit comment och tar med alla comment user skrivit
+            var whiceUserMadeComment = _bugTrackerDBContext.Comments.Include(comment => comment.User).ToList();
 
-            var a = _bugTrackerDBContext.Comments.Include(comment => comment.User).ToList();
 
-
-            return a;
+            return whiceUserMadeComment;
            
 
         }
