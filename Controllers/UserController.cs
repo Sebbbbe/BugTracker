@@ -29,7 +29,7 @@ namespace bugTrackerNew.Controllers
         [HttpGet]
         public List<User> GetUser()
         {
-          var GetUserList =    _bugTrackerDBContext.Users.ToList();
+            var GetUserList = _bugTrackerDBContext.Users.ToList();
             return GetUserList;
 
         }
@@ -43,31 +43,31 @@ namespace bugTrackerNew.Controllers
         }
 
 
-         [HttpDelete("{user_id:Guid}")]
-         public void DeleteUser(Guid User_id)
-         {
-             var User = _bugTrackerDBContext.Users.Find(User_id); 
-             _bugTrackerDBContext.Users.Remove(User);
-             _bugTrackerDBContext.SaveChanges();
-         } 
+        [HttpDelete("{user_id:Guid}")]
+        public void DeleteUser(Guid User_id)
+        {
+            var User = _bugTrackerDBContext.Users.Find(User_id);
+            _bugTrackerDBContext.Users.Remove(User);
+            _bugTrackerDBContext.SaveChanges();
+        }
 
-        
 
-         [HttpPut("{user_id:Guid}")]
-         public void UpdateUser ([FromBody] User user,  Guid user_id)
-         {
+
+        [HttpPut("{user_id:Guid}")]
+        public void UpdateUser([FromBody] User user, Guid user_id)
+        {
             var userUpdate = _bugTrackerDBContext.Users.Find(user_id);
-            
-                 userUpdate.First_name = user.First_name;
-                 userUpdate.Second_name = user.Second_name;
-                 _bugTrackerDBContext.SaveChanges();
-         }
+
+            userUpdate.First_name = user.First_name;
+            userUpdate.Second_name = user.Second_name;
+            _bugTrackerDBContext.SaveChanges();
+        }
 
 
         // en metod för att hämta 
 
 
-        [HttpGet ("{id:Guid}")] // användaren ska göra /user som kommer från route sedan user_id
+        [HttpGet("{id:Guid}")] // användaren ska göra /user som kommer från route sedan user_id
         // som jag säger här som ska vara av Guid /user/(guid_id)
         //det som är innuti http get måste ha samma namn som parametern vi kan kalla den test:guid tex
         // om vi ville
@@ -81,6 +81,21 @@ namespace bugTrackerNew.Controllers
 
             return GetOneUser;
 
+        }
+
+
+
+
+        [HttpGet("{id:Guid}/test")]
+        public void GetUserAndUserComments(Guid id , Comment comment)
+        {
+
+            
+                
+               
+         
+                
+                    
         }
 
 

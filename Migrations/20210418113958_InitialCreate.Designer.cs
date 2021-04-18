@@ -10,7 +10,7 @@ using bugTrackerNew;
 namespace bugTrackerNew.Migrations
 {
     [DbContext(typeof(BugTrackerDBContext))]
-    [Migration("20210415193154_InitialCreate")]
+    [Migration("20210418113958_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

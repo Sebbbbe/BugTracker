@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Converters;
 
 namespace bugTrackerNew
 {
@@ -18,7 +19,11 @@ namespace bugTrackerNew
     {
         public Startup(IConfiguration configuration)
         {
+
+         
             Configuration = configuration;
+
+           
         }
 
         public IConfiguration Configuration { get; }
@@ -27,10 +32,16 @@ namespace bugTrackerNew
         public void ConfigureServices(IServiceCollection services)
         {
           
+           
             services.AddDbContext<BugTrackerDBContext>
                 (options =>
                 options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=BugTrackerDB;Trusted_Connection=True;"));
             services.AddControllers();
+
+
+            services.AddControllers()
+          .AddNewtonsoftJson(x => x.SerializerSettings
+          .ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
         }
 

@@ -1,5 +1,7 @@
 ﻿using BugTrackerNew.Models;
+
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,5 +58,22 @@ namespace bugTrackerNew.Controllers
 
 
         }
+
+
+        [HttpGet("{id:Guid}/test")]
+        public List<Comment> GetUserAndComments()
+        {
+
+
+            var a = _bugTrackerDBContext.Comments.Include(comment => comment.User).ToList();
+
+
+            return a;
+           
+
+        }
+
+
+
     }
 }
